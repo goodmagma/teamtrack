@@ -7,20 +7,25 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
+    use HasRoles {
+        hasPermissionTo as traitHasPermissionTo;
+    }
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'firstname',
+        'lastname',
         'email',
         'password',
+        'locale'
     ];
 
     /**
@@ -42,4 +47,37 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    
+    
+    /**
+     * Return Avatar Initials
+     *
+     * @return string
+     */
+    public function getInitials(){
+        return strtoupper( substr($this->firstname, 0, 1) . substr($this->lastname, 0, 1) );
+    }
+    
+    
+    /**
+     * Return the user main role
+     * @return string
+     */
+    public function getMainRole(){
+        return $this->isAdmin() ? 'Administrator' : 'User';
+    }
+    
+    
+    /**
+     * True if user is an Administrator
+     *
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        return $this->hasRole('administrator');
+    }
+    
+    
+    
 }

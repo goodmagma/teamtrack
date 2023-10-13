@@ -19,4 +19,21 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+/**
+ * User Routes
+ */
+Route::group(['middleware' => ['auth']], function () {
+    
+    // Dashboard
+    Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    
+    // Profile
+    Route::group(['prefix' => 'profile'], function () {
+        Route::get('/', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+        Route::post('/', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+        Route::post('/password', [App\Http\Controllers\ProfileController::class, 'passwordUpdate'])->name('profile.password.update');
+        Route::get('/theme-switch', [App\Http\Controllers\ProfileController::class, 'themeSwitch'])->name('profile.themeSwitch');
+    });
+    
+});

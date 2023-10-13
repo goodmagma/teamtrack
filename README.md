@@ -21,4 +21,11 @@ php artisan migrate
 php artisan db:seed
 npm install
 npm run build
+php artisan optimize:clear
+```
+
+## Refresh database
+
+```
+php artisan migrate:fresh --seed
 ```
