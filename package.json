@@ -16,6 +16,7 @@
     "dependencies": {
         "@tabler/core": "^1.0.0-beta20",
         "@tabler/icons-webfont": "^2.34.0",
-        "tom-select": "^2.2.2"
+        "tom-select": "^2.2.2",
+        "vite-plugin-static-copy": "^0.17.0"
     }
 }
