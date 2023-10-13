@@ -30,7 +30,7 @@ class ProfileController extends Controller {
      */
     public function edit()
     {
-    	return view('profile.edit');
+    	return view('profile');
     }
     
     
@@ -94,7 +94,7 @@ class ProfileController extends Controller {
     public function themeSwitch()
     {
     	$user = auth()->user();
-    	$user->theme = $user->theme == 'light' ? 'dark' : 'light';
+    	$user->theme = $user->theme == 'default' ? 'dark' : 'default';
     	$user->save();
 
     	return redirect()->back()->with('status', __('Theme Switched Successfully.'));

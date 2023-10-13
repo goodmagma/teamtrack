@@ -65,8 +65,10 @@
     <link href="{{ asset('build/css/tabler-payments.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('build/css/tabler-vendors.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('build/icons/tabler-icons.min.css') }}" rel="stylesheet"/>
+    
+    <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    
     <style>
       @import url('{{ asset('build/fonts/inter/inter.css') }}');
       :root {

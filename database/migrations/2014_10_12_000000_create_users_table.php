@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('locale')->default("en");            
-            $table->enum('theme', ['light', 'dark'])->default('light');
+            $table->enum('theme', ['default', 'dark'])->default('default');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
