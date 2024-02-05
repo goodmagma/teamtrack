@@ -2,44 +2,107 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Lab404\Impersonate\Models\Impersonate;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable
-{
-    use HasApiTokens, HasFactory, Notifiable;
+class User extends Authenticatable {
+	use SoftDeletes;
+
+	use HasApiTokens, HasFactory, Notifiable;
+	use HasRoles {
+		hasPermissionTo as traitHasPermissionTo;
+	}
+	use Impersonate;
+
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var string[]
+	 */
+	protected $fillable = [
+			'firstname',
+			'lastname',
+			'email',
+			'password',
+			'locale'
+	];
+
+	/**
+	 * The attributes that should be hidden for serialization.
+	 *
+	 * @var array
+	 */
+	protected $hidden = [
+			'password',
+			'remember_token',
+	];
+
+	/**
+	 * The attributes that should be cast.
+	 *
+	 * @var array
+	 */
+	protected $casts = [
+			'email_verified_at' => 'datetime',
+	];
+
+
+	/**
+	 * Return Avatar Initials
+	 *
+	 * @return string
+	 */
+	public function getInitials(){
+		return strtoupper( substr($this->firstname, 0, 1) . substr($this->lastname, 0, 1) );
+	}
+
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
+     * Return the user main role
+     * @return string
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    public function getMainRole(){
+        if( $this->isAdmin() ){
+			return "Administrator";
+		}
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+		return "User";
+    }
+	
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
+	/**
+	 * True if user is an Administrator
+	 *
+	 * @return boolean
+	 */
+	public function isAdmin()
+	{
+		return $this->hasRole('administrator');
+	}
+
+	
+	/**
+	 * SCOPES
+	 */
+	public function scopeHasRoleAdmin($query)
+	{
+	    return $query->role('administrator');
+	}
+	
+	
+	/**
+	 *
+	 * @param $query
+	 * @param $keywords
+	 * @return $query
+	 */
+	public function scopeSearch($query, $keywords)
+	{
+		return $query->where('firstname', 'LIKE', '%'.$keywords.'%')->orWhere('lastname', 'LIKE', '%'.$keywords.'%')->orWhere('email', 'LIKE', '%'.$keywords.'%');
+	}
 }

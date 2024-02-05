@@ -19,6 +19,20 @@ return [
     'name' => env('APP_NAME', 'Laravel'),
 
     /*
+     |--------------------------------------------------------------------------
+     | Application Version
+     |--------------------------------------------------------------------------
+     |
+     | This value is the version of your application. This value is used when
+     | the framework needs to place the application's version in a notification
+     | or any other location as required by the application or its packages.
+     */
+    
+    'version' => '1.0.0 ALPHA 1',
+    
+    'release_date' => '2023-10-13',
+
+    /*
     |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
@@ -112,6 +126,19 @@ return [
     'faker_locale' => 'en_US',
 
     /*
+     |--------------------------------------------------------------------------
+     | Available Locales Configuration
+     |--------------------------------------------------------------------------
+     |
+     | The application locale determines the default locale that will be used
+     | by the translation service provider. You are free to set this value
+     | to any of the locales which will be supported by the application.
+     |
+     */
+    
+    'locales' => ['it' => 'Italiano', 'en' => 'English', 'es' => 'Español'],
+    
+    /*
     |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
@@ -159,7 +186,9 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Spatie\Permission\PermissionServiceProvider::class,
+        Lab404\Impersonate\ImpersonateServiceProvider::class,
+        
         /*
          * Application Service Providers...
          */
@@ -168,6 +197,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\LoggableServiceProvider::class,
+
     ])->toArray(),
 
     /*
