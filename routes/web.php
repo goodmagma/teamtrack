@@ -13,11 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/**
+ * Auth: Login & Registration
+ */
+Auth::routes(['register' => true]);
+
+
+/**
+ * Dashboard redirect
+ */
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
 
-Auth::routes();
+
+/**
+ * Pages Routes
+ */
+Route::get('/pages/{page}', [App\Http\Controllers\PagesController::class, 'page'])->name('pages.page');
 
 
 /**
@@ -26,14 +39,16 @@ Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
     
     // Dashboard
-    Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-    
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
     // Profile
     Route::group(['prefix' => 'profile'], function () {
         Route::get('/', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
         Route::post('/', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
         Route::post('/password', [App\Http\Controllers\ProfileController::class, 'passwordUpdate'])->name('profile.password.update');
         Route::get('/theme-switch', [App\Http\Controllers\ProfileController::class, 'themeSwitch'])->name('profile.themeSwitch');
+        Route::get('/impersonate/leave', [App\Http\Controllers\ProfileController::class, 'leaveImpersonation'])->name('profile.impersonate.leave');
     });
     
 });
+

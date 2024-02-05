@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.minimal')
 
 @section('title', __('Login'))
 
@@ -25,11 +25,9 @@
 				<label class="form-label">
 	            	{{ __('Password') }}
 	            	
-	            	{{--
 	            	@if (Route::has('password.request'))
 						<span class="form-label-description"><a href="{{ route('password.request') }}" tabindex="6">{{ __('Forgot Your Password?') }}</a></span>
 					@endif
-					--}}
 				</label>
 				<div class="input-group input-group-flat">
 					<input id="password" type="password" class="form-control @error('password') is-invalid @enderror"  name="password" required autocomplete="current-password" tabindex="2">
@@ -53,8 +51,9 @@
 		</div>
 		
 	</form>
+	@if (Route::has('register'))
     <div class="text-center text-muted mt-3">
 		{{__("Don't have account yet?")}} <a href="{{route('register')}}" tabindex="5">{{__("Register")}}</a>
 	</div>
-
+	@endif
 @endsection

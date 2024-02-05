@@ -16,21 +16,21 @@ class UsersTableSeeder extends Seeder
     {
 
     	//administrator
-    	$admin = User::where('email', '=', 'john.doe@mail.app')->first();
+    	$admin = User::where('email', '=', 'admin@platform.com')->first();
     	
     	if (is_null($admin)) {
     		$this->command->info('User Administrator not found, creating!');
 
     		$admin = User::create(array(
-				'firstname'     => 'John',
-    			'lastname'     	=> 'Doe',
-    			'email'  		=> 'john.doe@mail.app',
-    			'password' 		=> bcrypt('P@ssword'),
+				'firstname'     => 'Admin',
+    			'lastname'     	=> 'Platform',
+    			'email'  		=> 'admin@platform.com',
+    			'password' 		=> bcrypt('password'),
     		    'remember_token' => Str::random(10)
     		));
     	}
 
     	$admin->assignRole('administrator');
-
+	
     }
 }

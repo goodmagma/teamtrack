@@ -10,75 +10,10 @@
     alertIsSuccess: '',
     alertIsVisible: false
 }">
-<head>
-	<meta charset="utf-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-	<meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1"/>
-	<meta name="robots" content="index,follow,max-image-preview:large" />
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	
-	<title>{{ config('app.name', 'Laravel') }}</title>
-	
-	<meta name="description" content="{{ config('app.name', 'Laravel') }}">
-	<meta name="og:title" content="{{ config('app.name', 'Laravel') }} - @yield('title')">
-	<meta name="og:site_name" content="{{ config('app.name', 'Laravel') }}" />
-    <meta name="og:description" content="{{ config('app.name', 'Laravel') }}">
-    <meta name="og:image" content="{{ asset('build/images/logo_share.png') }}">
-    
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="{{ config('app.name', 'Laravel') }}" />
-	<meta name="twitter:image" content="{{ asset('build/images/logo_share.png') }}" />
-	<meta name="twitter:description" content="{{ config('app.name', 'Laravel') }}">
 
-	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-title" content="{{ config('app.name', 'Laravel') }}">
-    <meta name="HandheldFriendly" content="True"/>
-    <meta name="MobileOptimized" content="320"/>
+@include('layouts.partials.head')
 
-	<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
-
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('build/images/favicon/favicon-16x16.png') }}">
-   	<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('build/images/favicon/favicon-32x32.png') }}">
-   	<link rel="icon" type="image/png" sizes="196x196" href="{{ asset('build/images/favicon/favicon-196x196.png') }}">
-   	<link rel="icon" type="image/png" sizes="512x512" href="{{ asset('build/images/favicon/favicon-512x512.png') }}">
-
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('build/images/favicon/apple-touch-icon.png') }}">
-	<link rel="mask-icon" href="{{ asset('build/images/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
-
-    <link rel="manifest" href="{{ asset('build/images/favicon/manifest.json') }}">
-
-    <meta name="msapplication-TileColor" content="#0054a6">
-    <meta name="msapplication-TileImage" content="{{ asset('build/images/favicon/mstile-150x150.png') }}">
-    <meta name="msapplication-config" content="{{ asset('build/images/favicon/browserconfig.xml') }}" />
-
-	<meta name="theme-color" content="#0054a6">
-    
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    
-    <!-- CSS files -->
-    <link href="{{ asset('build/css/tabler.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('build/css/tabler-flags.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('build/css/tabler-payments.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('build/css/tabler-vendors.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('build/icons/tabler-icons.min.css') }}" rel="stylesheet"/>
-    
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
-    <style>
-      @import url('{{ asset('build/fonts/inter/inter.css') }}');
-      :root {
-      	--tblr-font-sans-serif: Inter, -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
-      }
-    </style>
-    
-    @yield('head')
-</head>
-<body data-bs-theme="{{Auth()->user()->theme}}">
+<body @if ( Auth::user()->theme_dark ) data-bs-theme="dark" @endif>
 
 	<div class="page">
 
@@ -89,9 +24,18 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-					<a href="{{ route('dashboard') }}"><img src="{{ asset('build/images/logo.png') }}" height="50" alt="{{ config('app.name', 'Laravel') }}"></a>
+					<a href="{{ route('dashboard') }}"><img src="{{ asset('build/images/logo.png') }}" height="50" alt="CloudConversa"></a>
 				</h1>
 				<div class="navbar-nav flex-row order-md-last">
+					@impersonating
+					<!-- Impersonate User -->
+					<div class="nav-item dropdown d-md-flex me-3">
+						<a href="{{ route('profile.impersonate.leave') }}" class="nav-link px-0" title="Leave Impersonate User {{auth()->user()->firstname}} {{auth()->user()->lastname}}" data-bs-toggle="tooltip" data-bs-placement="bottom">
+							<i class="ti ti-user-x"></i>
+						</a>
+					</div>
+					<!-- /Impersonate User -->
+					@endImpersonating
 
 					<!-- Theme Switch -->
 					<div class="nav-item dropdown d-none d-md-flex me-3">
@@ -128,22 +72,36 @@
 		</header>
 		
         <header class="navbar-expand-md">
-			<div class="collapse navbar-collapse" id="navbar-menu">
+        	<div class="collapse navbar-collapse" id="navbar-menu">
             	<div class="navbar">
                 	<div class="container-xl">
                     	<div class="row flex-fill align-items-center">
                         	<div class="col">
-                          		<ul class="navbar-nav">
-    						
-            						<li class="nav-item {{ Request::routeIs('dashboard*') ? 'active' : '' }}">
-            							<a class="nav-link" href="{{ route('dashboard') }}">
-            								<span class="nav-link-icon d-md-none d-lg-inline-block">
-            									<i class="ti ti-dashboard"></i>
-            								</span>
-            								<span class="nav-link-title">{{__("Dashboard")}}</span>
-            							</a>
-            						</li>
+                                <ul class="navbar-nav">
+                                    
+                                        <li class="nav-item {{ Request::routeIs('dashboard*') ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ route('dashboard') }}">
+                                                <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-dashboard"></i></span>
+                                                <span class="nav-link-title">{{__("Dashboard")}}</span>
+                                            </a>
+                                        </li>
 
+                                    	@if( auth()->user()->isAdmin() )
+                                        
+                                        <li class="nav-item dropdown {{ Request::routeIs('administration*') ? 'active' : '' }}">
+                                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                                <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-grid-dots"></i></span>
+                                                <span class="nav-link-title">{{__("Administration")}}</span>
+                                            </a>
+                                    
+                                            <div class="dropdown-menu" data-bs-popper="none">
+                                                @if( auth()->user()->isAdmin() )
+                                                	<a class="dropdown-item {{ Request::routeIs('administration.users*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">{{__("Users")}}</a>
+                                                @endif
+                                            </div>
+        								</li>
+                                    
+                                    @endif
 								</ul>
 							</div>
 						</div>
@@ -223,24 +181,7 @@
 				</div>
 			</div>
 
-        	<!-- Footer -->
-        	<footer class="footer footer-transparent d-print-none">
-        		<div class="container-xl">
-        			<div class="row text-center align-items-center flex-row-reverse">
-        				<div class="col-12 col-lg-auto mt-3 mt-lg-0">
-        					<ul class="list-inline list-inline-dots mb-0">
-        						<li class="list-inline-item">
-        							Copyright &copy; 2021-{{date("Y")}} {{config('app.name')}}. All rights reserved.
-        						</li>
-                  				<li class="list-inline-item">
-        							v{{ config('app.version', '') }} / {{ config('app.release_date', '') }}
-                  				</li>
-                			</ul>
-        				</div>
-        			</div>
-        		</div>
-        	</footer>
-        	<!-- /Footer -->
+			@include('layouts.partials.footer')
 
 		</div>
 		<!-- /Page -->
@@ -249,10 +190,11 @@
 
 	<!-- Libs JS -->
 	<script src="{{ asset('build/js/tom-select.base.min.js') }}"></script>
+    <script src="{{ asset('build/js/dropzone-min.js') }}"></script>
 
 	<!-- Tabler Core -->
     <script src="{{ asset('build/js/tabler.min.js') }}"></script>
-
+    
 	@yield('scripts')
 </body>
 </html>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 /**
  * Profile Controller
@@ -30,7 +29,7 @@ class ProfileController extends Controller {
      */
     public function edit()
     {
-    	return view('profile');
+    	return view('profile.edit');
     }
     
     
@@ -84,7 +83,7 @@ class ProfileController extends Controller {
     	
     	return redirect()->back()->with('status', __('Your password has been updated successfully.'));
     }
-
+    
     
     /**
      * Show the application dashboard.
@@ -94,10 +93,23 @@ class ProfileController extends Controller {
     public function themeSwitch()
     {
     	$user = auth()->user();
-    	$user->theme = $user->theme == 'default' ? 'dark' : 'default';
+    	$user->theme_dark = !$user->theme_dark;
     	$user->save();
 
     	return redirect()->back()->with('status', __('Theme Switched Successfully.'));
     }
     
+    
+    /**
+     * Leave Impersonation
+     *
+     * @return
+     */
+    public function leaveImpersonation()
+    {
+        auth()->user()->leaveImpersonation();
+        
+        return redirect()->route('dashboard');
+    }
+
 }

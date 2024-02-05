@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.minimal')
 
 @section('title', __('Sign Up'))
 

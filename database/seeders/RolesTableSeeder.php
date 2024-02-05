@@ -15,6 +15,7 @@ class RolesTableSeeder extends Seeder
     {
 		$permissions_role_names = array(
 			'administrator' => array(),
+			'editor' => array('can edit')
 		);
 		
 		foreach ($permissions_role_names as $role_name => $permissions){

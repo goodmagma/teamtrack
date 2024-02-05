@@ -36,7 +36,7 @@
                       		<label class="form-label required">{{__("Language")}}</label>
                       		<div>
 	                            <select type="text" id="locale" name="locale" class="form-select" placeholder="Select a Locale" value="" required>
-	                            	@foreach(config('app.locales') as $loc_id => $loc_label)
+	                            	@foreach(config('platform.locales') as $loc_id => $loc_label)
 			                            <option value="{{$loc_id}}" {{ old('loc_id', auth()->user()->locale) == $loc_id ? 'selected' : '' }} data-custom-properties="&lt;span class=&quot;flag flag-xs flag-language-{{$loc_id}}&quot;&gt;&lt;/span&gt;">{{$loc_label}}</option>
 									@endforeach
 	                            </select>
@@ -50,7 +50,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="col-12">
 		<div class="card">
 			<div class="card-body">

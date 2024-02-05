@@ -32,6 +32,10 @@
 	font-size: .800rem !important;
 }
 
+.text-large {
+	font-size: 1rem !important;
+}
+
 #sid-ts-control{
 	width: 50px;
 }
