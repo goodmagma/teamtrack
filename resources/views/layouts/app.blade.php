@@ -27,9 +27,31 @@
 					<a href="{{ route('dashboard') }}"><img src="{{ asset('build/images/logo.svg') }}" height="36" alt="{{ config('app.name') }}"></a>
 				</h1>
 				<div class="navbar-nav flex-row order-md-last">
+
+                    <div class="nav-item d-none d-md-flex me-3">
+						<div class="btn-list">
+							<span class="dropdown">
+								<button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="true">
+									<span class="avatar avatar-xs rounded me-2">AP</span>
+									Actions
+								</button>
+								<div class="dropdown-menu dropdown-menu-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 41.6px, 0px);" data-popper-placement="bottom-end">
+									<a class="dropdown-item" href="#">
+										<span class="avatar avatar-xs rounded me-2">AP</span>
+										Action
+									</a>
+									<a class="dropdown-item" href="#">
+										<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+										{{__("New Workspace")}}
+									</a>
+								</div>
+							</span>
+						</div>
+                    </div>
+				
 					@impersonating
 					<!-- Impersonate User -->
-					<div class="nav-item dropdown d-md-flex me-3">
+					<div class="d-none d-md-flex">
 						<a href="{{ route('profile.impersonate.leave') }}" class="nav-link px-0" title="Leave Impersonate User {{auth()->user()->firstname}} {{auth()->user()->lastname}}" data-bs-toggle="tooltip" data-bs-placement="bottom">
 							<i class="ti ti-user-x"></i>
 						</a>
@@ -38,7 +60,7 @@
 					@endImpersonating
 
 					<!-- Theme Switch -->
-					<div class="nav-item dropdown d-none d-md-flex me-3">
+					<div class="d-none d-md-flex">
 						<a href="{{ route('profile.themeSwitch') }}" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
 							<i class="ti ti-moon"></i>
 						</a>
