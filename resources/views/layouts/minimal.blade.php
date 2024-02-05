@@ -8,7 +8,7 @@
     	<div class="@hasSection('container-class')@yield('container-class')@else container-tight @endif py-4">
 
 			<div class="text-center mb-4">
-    			<a href="/" class="navbar-brand navbar-brand-autodark"><img src="{{ asset('build/images/logo.png') }}" height="100" alt=""></a>
+    			<a href="/" class="navbar-brand navbar-brand-autodark"><img src="{{ asset('build/images/logo.svg') }}" height="100" alt="{{ config('app.name') }}"></a>
 			</div>
 
 			@if (session('error'))

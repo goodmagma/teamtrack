@@ -1,6 +1,9 @@
-# MyProject
+<p align="center"><img src="resources/images/logo.svg" width="400" alt="Laravel Logo"></a></p>
 
-Web application based on Laravel 10.x
+
+# TeamTrack
+
+Teamtrack is a time tracking software for teams based on Laravel 10.x
 
 
 # Installation
