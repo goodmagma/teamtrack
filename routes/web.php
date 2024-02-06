@@ -39,8 +39,20 @@ Route::get('/pages/{page}', [App\Http\Controllers\PagesController::class, 'page'
 Route::group(['middleware' => ['auth']], function () {
     
     // Dashboard
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 
+    Route::get('/{workspace}', [App\Http\Controllers\WorkspaceController::class, 'dashboard'])->name('workspaces.dashboard');
+    
+    // Workspaces
+    Route::group(['prefix' => 'workspaces'], function () {
+        Route::get('/new', [App\Http\Controllers\WorkspaceController::class, 'new'])->name('workspaces.new');
+        Route::get('/{workspace}/edit', [App\Http\Controllers\WorkspaceController::class, 'edit'])->name('workspaces.edit');
+        Route::post('/save', [App\Http\Controllers\WorkspaceController::class, 'save'])->name('workspaces.save');
+        Route::post('/update/{workspace}', [App\Http\Controllers\WorkspaceController::class, 'update'])->name('workspaces.update');
+        Route::get('/delete/{workspace}', [App\Http\Controllers\WorkspaceController::class, 'delete'])->name('workspaces.delete');
+    });
+        
+    
     // Profile
     Route::group(['prefix' => 'profile'], function () {
         Route::get('/', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
