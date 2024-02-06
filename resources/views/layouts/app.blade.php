@@ -105,7 +105,7 @@
                         	<div class="col">
                                 <ul class="navbar-nav">
                                     
-                                    <li class="nav-item {{ Request::routeIs('dashboard*') ? 'active' : '' }}">
+                                    <li class="nav-item {{ Request::routeIs('workspaces.dashboard*') ? 'active' : '' }}">
                                         <a class="nav-link" href="{{ route('dashboard') }}">
                                             <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-dashboard"></i></span>
                                             <span class="nav-link-title">{{__("Dashboard")}}</span>
