@@ -13,17 +13,11 @@
 			@csrf
 			<div class="card-body">
 				<div class="row row-cards">
-					<div class="row p-2 mb-3">
-                    	<div class="form-group col-12 col-md-12">
-                    		<div class="row">
-                            	<div class="form-group">
-                              		<label class="form-label required">{{__("Workspace Name")}}</label>
-                              		<div>
-                                		<input type="text" id="name" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" value="{{ old('name', $workspace->name) }}" placeholder="{{__("Enter a Name for your Workspace")}}" required autocomplete="off" maxlength="14">
-                              		</div>
-                            	</div>
-                    		</div>
-                    	</div>
+					<div class="col-sm-6 col-md-12">
+						<div class="mb-3">
+                            <label class="form-label required">{{__("Workspace Name")}}</label>
+                            <input type="text" id="name" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" value="{{ old('name', $workspace->name) }}" placeholder="{{__("Workspace Name")}}" required autocomplete="off" maxlength="100">
+						</div>
                     </div>
 				</div>
 			</div>

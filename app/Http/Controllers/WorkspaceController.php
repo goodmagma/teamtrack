@@ -33,6 +33,11 @@ class WorkspaceController extends Controller {
      */
     public function dashboard(Request $request, Workspace $workspace)
     {
+        //check ownership
+        if( $workspace->id && $workspace->user_id != Auth::id() ){
+            abort(403);
+        }
+
         //get workspaces
         $workspaces = Workspace::where('user_id', Auth::id())->orderBy('name', 'ASC')->paginate(10);
 
@@ -69,7 +74,7 @@ class WorkspaceController extends Controller {
      */
     public function edit(Request $request, Workspace $workspace)
     {
-        //check account owner and type
+        //check ownership
         if( $workspace->id && $workspace->user_id != Auth::id() ){
             abort(403);
         }
@@ -102,7 +107,7 @@ class WorkspaceController extends Controller {
      */
     public function update(Request $request, Workspace $workspace)
     {
-        //check account owner and type
+        //check ownership
         if( $workspace->id && $workspace->user_id != Auth::id() ){
             abort(403);
     	}
@@ -128,17 +133,17 @@ class WorkspaceController extends Controller {
 
 
     /**
-     * Delete Account
+     * Delete Workspace
      *
-     * @param Account $account
+     * @param Workspace $workspace
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function delete(Request $request, Account $account)
+    public function delete(Request $request, Workspace $workspace)
     {
-        $this->authorize('delete', $account);
+        $this->authorize('delete', $workspace);
 
-    	$account->delete();
+        $workspace->delete();
 
-    	return redirect()->route('accounts')->with('status', __('Account has been deleted successfully.'));
+    	return redirect()->route('dashboard')->with('status', __('Workspace has been deleted successfully.'));
     }
 }

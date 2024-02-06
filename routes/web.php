@@ -40,18 +40,31 @@ Route::group(['middleware' => ['auth']], function () {
     
     // Dashboard
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-
-    Route::get('/{workspace}', [App\Http\Controllers\WorkspaceController::class, 'dashboard'])->name('workspaces.dashboard');
     
     // Workspaces
     Route::group(['prefix' => 'workspaces'], function () {
         Route::get('/new', [App\Http\Controllers\WorkspaceController::class, 'new'])->name('workspaces.new');
-        Route::get('/{workspace}/edit', [App\Http\Controllers\WorkspaceController::class, 'edit'])->name('workspaces.edit');
         Route::post('/save', [App\Http\Controllers\WorkspaceController::class, 'save'])->name('workspaces.save');
-        Route::post('/update/{workspace}', [App\Http\Controllers\WorkspaceController::class, 'update'])->name('workspaces.update');
-        Route::get('/delete/{workspace}', [App\Http\Controllers\WorkspaceController::class, 'delete'])->name('workspaces.delete');
     });
+
+    // Workspace
+    Route::group(['prefix' => '{workspace}'], function () {
+        Route::get('/', [App\Http\Controllers\WorkspaceController::class, 'dashboard'])->name('workspaces.dashboard');
+        Route::get('/edit', [App\Http\Controllers\WorkspaceController::class, 'edit'])->name('workspaces.edit');
+        Route::post('/update', [App\Http\Controllers\WorkspaceController::class, 'update'])->name('workspaces.update');
+        Route::get('/delete', [App\Http\Controllers\WorkspaceController::class, 'delete'])->name('workspaces.delete');
         
+        // Projects
+        Route::group(['prefix' => 'projects'], function () {
+            Route::get('/', [App\Http\Controllers\ProjectController::class, 'index'])->name('projects.index');
+            Route::get('/new', [App\Http\Controllers\ProjectController::class, 'new'])->name('projects.new');
+            Route::post('/save', [App\Http\Controllers\ProjectController::class, 'save'])->name('projects.save');
+            Route::get('/{project}/edit', [App\Http\Controllers\ProjectController::class, 'edit'])->name('projects.edit');
+            Route::post('/{project}/update', [App\Http\Controllers\ProjectController::class, 'update'])->name('projects.update');
+            Route::get('/{project}/delete', [App\Http\Controllers\ProjectController::class, 'delete'])->name('projects.delete');
+        });
+
+    });
     
     // Profile
     Route::group(['prefix' => 'profile'], function () {
