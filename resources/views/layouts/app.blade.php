@@ -38,7 +38,7 @@
 								<div class="dropdown-menu dropdown-menu-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 41.6px, 0px);" data-popper-placement="bottom-end">
 									@foreach($workspaces as $ws)
     									@if($ws->id != $workspace->id)
-        									<a class="dropdown-item" href="{{route('workspaces.dashboard', $ws)}}">
+        									<a class="dropdown-item" href="{{route('workspaces.switch', $ws)}}">
         										<span class="avatar avatar-xs rounded me-2">{{$ws->getInitials()}}</span>
         										{{$ws->name}}
         									</a>

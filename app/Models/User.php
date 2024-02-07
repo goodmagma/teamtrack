@@ -87,11 +87,24 @@ class User extends Authenticatable {
 		return $this->hasRole('administrator');
 	}
 
+	public function workspace()
+	{
+	    return $this->belongsTo(Workspace::class, 'workspace_id');
+	}
+	
+	/**
+	 * 
+	 * @return HasMany
+	 */
 	public function workspaces(): HasMany
 	{
 	    return $this->hasMany(Workspace::class);
 	}
 
+	/**
+	 * 
+	 * @return HasMany
+	 */
 	public function tasks(): HasMany
 	{
 	    return $this->hasMany(Task::class);

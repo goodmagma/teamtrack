@@ -31,13 +31,20 @@ class HomeController extends Controller {
     {
         $user = Auth::user();
         
-        $workspace = $user->workspaces()->first();
+        $workspace = null;
+        
+        if( !empty( $user->workspace ) ){
+            $workspace = $user->workspace;
+        }
+        else{
+            $workspace = $user->workspaces()->first();
+        }
         
         if( empty( $workspace ) ){
             return redirect()->route('workspaces.new');
         }
         
-        return redirect()->route('workspaces.dashboard', $workspace);
+        return redirect()->route('workspaces.switch', $workspace);
     }
 
 }

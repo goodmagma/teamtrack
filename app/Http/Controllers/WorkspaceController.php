@@ -25,6 +25,26 @@ class WorkspaceController extends Controller {
         $this->middleware('auth');
     }
 
+    
+    /**
+     * Show Workspace Dashboard
+     *
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function switch(Request $request, Workspace $workspace)
+    {
+        //check ownership
+        if( $workspace->id && $workspace->user_id != Auth::id() ){
+            abort(403);
+        }
+        
+        $user = Auth::user();
+        $user->workspace_id = $workspace->id;
+        $user->save();
+        
+        return redirect()->route('workspaces.dashboard', $workspace);
+    }
+    
 
     /**
      * Show Workspace Dashboard
@@ -47,7 +67,6 @@ class WorkspaceController extends Controller {
     	else {
     	    return redirect()->route('workspaces.new');
     	}
-
     }
 
 

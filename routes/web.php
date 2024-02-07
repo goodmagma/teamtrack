@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth']], function () {
     
     // Workspaces
     Route::group(['prefix' => 'workspaces'], function () {
+        Route::get('/switch/{workspace}', [App\Http\Controllers\WorkspaceController::class, 'switch'])->name('workspaces.switch');
         Route::get('/new', [App\Http\Controllers\WorkspaceController::class, 'new'])->name('workspaces.new');
         Route::post('/save', [App\Http\Controllers\WorkspaceController::class, 'save'])->name('workspaces.save');
     });
