@@ -115,8 +115,15 @@
 									@isset($workspace->id)
                                     <li class="nav-item {{ Request::routeIs('projects*') ? 'active' : '' }}">
                                         <a class="nav-link" href="{{ route('projects.index', $workspace) }}">
-                                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-dashboard"></i></span>
+                                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-subtask"></i></span>
                                             <span class="nav-link-title">{{__("Projects")}}</span>
+                                        </a>
+                                    </li>
+                                    
+                                    <li class="nav-item {{ Request::routeIs('tasks*') ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('tasks.index', $workspace) }}">
+                                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-list-check"></i></span>
+                                            <span class="nav-link-title">{{__("Task")}}</span>
                                         </a>
                                     </li>
                                     @endisset

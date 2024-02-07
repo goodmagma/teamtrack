@@ -64,6 +64,16 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/{project}/delete', [App\Http\Controllers\ProjectController::class, 'delete'])->name('projects.delete');
         });
 
+        // Tasks
+        Route::group(['prefix' => 'tasks'], function () {
+            Route::get('/', [App\Http\Controllers\TaskController::class, 'index'])->name('tasks.index');
+            Route::get('/new', [App\Http\Controllers\TaskController::class, 'new'])->name('tasks.new');
+            Route::post('/save', [App\Http\Controllers\TaskController::class, 'save'])->name('tasks.save');
+            Route::get('/{task}/edit', [App\Http\Controllers\TaskController::class, 'edit'])->name('tasks.edit');
+            Route::post('/{task}/update', [App\Http\Controllers\TaskController::class, 'update'])->name('tasks.update');
+            Route::get('/{task}/delete', [App\Http\Controllers\TaskController::class, 'delete'])->name('tasks.delete');
+        });
+
     });
     
     // Profile

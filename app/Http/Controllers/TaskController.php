@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Workspace;
 use App\Models\Project;
+use App\Models\Task;
 
 /**
- * Project Controller
+ * Task Controller
  * 
  * @author Denis
  */
-class ProjectController extends Controller {
+class TaskController extends Controller {
     /**
      * Create a new controller instance.
      *
@@ -40,21 +41,21 @@ class ProjectController extends Controller {
         }
 
         $keywords = $request->input('q');
-        $query = Project::query();
+        $query = Task::query();
         
         if( $keywords ){
             $query->search( $keywords );
         }
         
-        //get projects
-        $projects = $query->where('workspace_id', $workspace->id)->orderBy('name', 'ASC')->paginate(10);
+        //get tasks
+        $tasks = $query->where('workspace_id', $workspace->id)->orderBy('id', 'ASC')->paginate(10);
        
-        return view('projects.index', compact('workspace', 'projects', 'keywords'));
+        return view('tasks.index', compact('workspace', 'tasks', 'keywords'));
     }
 
 
     /**
-     * Create new Projects
+     * Create new Task
      *
      * @param Request $request
      * @param Workspace $workspace
@@ -63,21 +64,21 @@ class ProjectController extends Controller {
     public function new(Request $request, Workspace $workspace)
     {
         //Create new workspace
-        $project = new Project();
+        $task = new Task();
 
-    	return $this->edit($request, $workspace, $project);
+    	return $this->edit($request, $workspace, $task);
     }
 
 
     /**
-     * Edit Project
+     * Edit Workspace
      *
      * @param Request $request
      * @param Workspace $workspace
-     * @param Project $project
+     * @param Task $task
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function edit(Request $request, Workspace $workspace, Project $project)
+    public function edit(Request $request, Workspace $workspace, Task $task)
     {
         //check ownership
         if( $workspace->id && $workspace->user_id != Auth::id() ){
@@ -85,37 +86,40 @@ class ProjectController extends Controller {
         }
 
         //check ownership
-        if( $project->id && $project->user_id != Auth::id() ){
+        if( $task->id && $task->user_id != Auth::id() ){
             abort(403);
         }
         
-        return view('projects.edit', compact('workspace', 'project'));
+        //get projects
+        $projects = Project::where('workspace_id', $workspace->id)->orderBy('name', 'ASC')->get();
+        
+        return view('tasks.edit', compact('workspace', 'task', 'projects'));
     }
 
 
     /**
-     * Save a newly created Project
+     * Save a newly created Task
      *
      * @param Request $request
      * @param Workspace $workspace
      * @return \Illuminate\Http\RedirectResponse
      */
     public function save(Request $request, Workspace $workspace){
-        $project = new Project();
+        $task = new Task();
 
-        return $this->update($request, $workspace, $project);
+        return $this->update($request, $workspace, $task);
     }
 
 
     /**
-     * Update the specified Project
+     * Update the specified Task
      *
      * @param Request $request
      * @param Workspace $workspace
-     * @param Project $project
+     * @param Task $task
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Workspace $workspace, Project $project)
+    public function update(Request $request, Workspace $workspace, Task $task)
     {
         //check ownership
         if( $workspace->id && $workspace->user_id != Auth::id() ){
@@ -123,42 +127,46 @@ class ProjectController extends Controller {
     	}
 
     	//check ownership
-    	if( $project->id && $project->user_id != Auth::id() ){
+    	if( $task->id && $task->user_id != Auth::id() ){
     	    abort(403);
     	}
     	
     	$request->validate([
-    	    'name' => 'required',
+    	    'title' => 'required',
+    	    'project_id' => 'required',
 		]);
 
     	//only on create
-    	if( empty( $project->id ) ){
-    	    $project->workspace_id = $workspace->id;
-    	    $project->user_id = Auth::id();
+    	if( empty( $task->id ) ){
+    	    $task->workspace_id = $workspace->id;
+    	    $task->user_id = Auth::id();
     	}
 
-    	$project->name = $request->input('name');
-    	$project->description = $request->input('description');
+    	$task->project_id = $request->input('project_id');
+    	$task->title = $request->input('title');
+    	$task->description = $request->input('description');
+    	$task->issue_link = $request->input('issue_link');
+    	$task->pr_link = $request->input('pr_link');
 
-    	$project->save();
+    	$task->save();
 
-    	return redirect()->route('projects.index', [$workspace])->with('status', __('Project has been created successfully.'));
+    	return redirect()->route('tasks.index', [$workspace])->with('status', __('Task has been created successfully.'));
     }
 
 
     /**
-     * Delete Project
+     * Delete Task
      *
      * @param Workspace $workspace
-     * @param Project $project
+     * @param Task $task
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function delete(Request $request, Workspace $workspace, Project $project)
+    public function delete(Request $request, Workspace $workspace, Task $task)
     {
-        $this->authorize('delete', $project);
+        $this->authorize('delete', $task);
 
-        $project->delete();
+        $task->delete();
 
-    	return redirect()->route('projects.index')->with('status', __('Project has been deleted successfully.'));
+    	return redirect()->route('tasks.index')->with('status', __('Task has been deleted successfully.'));
     }
 }
