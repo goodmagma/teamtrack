@@ -140,34 +140,41 @@
 		<!-- Page -->
 		<div class="page-wrapper">
 
-			<div class="container-xl">
+			<div class="page-header d-print-none">
 
-				<div class="page-header d-print-none">
+				<div class="container-xl">
     					
-					<div class="row align-items-center">
+					<div class="row g-2 align-items-center">
 						@hasSection('breadcrumb')
     						<div class="mb-1">
     							@yield('breadcrumb')
 							</div>
     					@endif
 
-						<div class="col">
-							@hasSection('pretitle')<div class="page-pretitle">@yield('pretitle')</div>@endif
-							<h2 class="page-title">@yield('title')</h2>
-							@hasSection('subtitle')<div class="text-muted mt-1">@yield('subtitle')</div>@endif
-						</div>
+						@hasSection('title')
+    						<div class="col">
+    							@hasSection('pretitle')<div class="page-pretitle">@yield('pretitle')</div>@endif
+    							<h2 class="page-title">@yield('title')</h2>
+    							@hasSection('subtitle')<div class="text-muted mt-1">@yield('subtitle')</div>@endif
+    						</div>
+						@endif
 
 						@hasSection('actions')
-						<!-- Page title actions -->
-						<div class="col-auto ms-auto d-print-none">
-							<div class="btn-list">
-								@yield('actions')
-                			</div>
-              			</div>
+    						<!-- Page title actions -->
+    						<div class="col-auto ms-auto d-print-none">
+    							<div class="btn-list">
+    								@yield('actions')
+                    			</div>
+                  			</div>
               			@endif
-
+              			
+              			@hasSection('pageheader')
+              				@yield('pageheader')
+              			@endif
 					</div>
+
 				</div>
+
 			</div>
 
 			<div class="page-body">
@@ -214,9 +221,10 @@
 
 	</div>
 
+	@yield('modals')
+
 	<!-- Libs JS -->
 	<script src="{{ asset('build/js/tom-select.base.min.js') }}"></script>
-    <script src="{{ asset('build/js/dropzone-min.js') }}"></script>
 
 	<!-- Tabler Core -->
     <script src="{{ asset('build/js/tabler.min.js') }}"></script>

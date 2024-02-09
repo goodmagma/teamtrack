@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Workspace;
+use App\Models\Project;
 
 /**
  * Accounts Controller
@@ -59,14 +60,9 @@ class WorkspaceController extends Controller {
         }
 
         //get workspaces
-        $workspaces = Workspace::where('user_id', Auth::id())->orderBy('name', 'ASC')->paginate(10);
+        $projects = Project::where('user_id', Auth::id())->orderBy('name', 'ASC')->get();
 
-        if( count( $workspaces ) > 0 ) {
-    		return view('workspaces.dashboard', compact('workspace'));
-    	}
-    	else {
-    	    return redirect()->route('workspaces.new');
-    	}
+        return view('workspaces.dashboard', compact('workspace', 'projects'));
     }
 
 

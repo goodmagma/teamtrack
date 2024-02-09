@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->ulid('workspace_id')->after('remember_token');
+            $table->ulid('workspace_id')->nullable()->after('remember_token');
+            
+            $table->foreign('workspace_id')->references('id')->on('workspaces')->cascadeOnDelete();
         });
     }
 

@@ -21,8 +21,8 @@
 					</div>
 					<div class="col-sm-6 col-md-6">
 						<div class="mb-3">
-                            <label class="form-label required">{{__("Description")}}</label>
-                            <input type="text" id="description" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" value="{{ old('description', $project->description) }}" placeholder="{{__("Project Description")}}" required autocomplete="off">
+                            <label class="form-label">{{__("Description")}}</label>
+                            <input type="text" id="description" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" value="{{ old('description', $project->description) }}" placeholder="{{__("Project Description")}}" autocomplete="off">
 						</div>
                     </div>
 				</div>

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
 			$table->unsignedBigInteger('user_id');
-			$table->foreignUlid('workspace_id')->constrained('workspaces')->cascadeOnDelete();
+			$table->ulid('workspace_id');
             $table->string('name');
             $table->string('description')->nullable();
 
@@ -22,6 +22,7 @@ return new class extends Migration
 			$table->softDeletes();
 
 			$table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+			$table->foreign('workspace_id')->references('id')->on('workspaces')->cascadeOnDelete();
         });
     }
 
