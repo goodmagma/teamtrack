@@ -2,8 +2,8 @@
 	<div class="card-body">
     	<div class="row g-2 align-items-center">
     		<div class="col-sm-6 col-md-10" wire:poll.1s>
-    			<div class="row">
-            		@if( !empty($workSession) )
+				@if( !empty($workSession) )
+    				<div class="row">
             			<div class="col-auto">
                             <span class="status-indicator status-green status-indicator-animated">
                                 <span class="status-indicator-circle"></span>
@@ -31,7 +31,7 @@
             			</div>
             			<div class="col-auto">
             				@if($workSession->is_paused)
-            				<a href="#" class="btn" wire:click="resumeWorkSession">
+            				<a href="#" class="btn btn-yellow" wire:click="resumeWorkSession">
             					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 4v16l13 -8z" /></svg>
             					{{__("Resume")}}
             				</a>
@@ -41,7 +41,7 @@
             					{{__("Pause")}}
             				</a>
             				@endif
-            				<a href="#" class="btn" wire:click="stopWorkSession">
+            				<a href="#" class="btn btn-danger" wire:click="stopWorkSession">
             					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-stop" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 5m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /></svg>
             					{{__("Stop")}}
             				</a>
