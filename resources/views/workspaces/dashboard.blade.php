@@ -2,11 +2,20 @@
 
 @section('pageheader')
 
-	<div class="row">
+	<div class="row mb-3">
 
 		<div class="col-md-12">
 		
 			<livewire:work-session-card :workspace="$workspace" />
+
+		</div>
+	</div>
+
+	<div class="row">
+
+		<div class="col-md-12">
+		
+			<livewire:work-session-list :workspace="$workspace" />
 
 		</div>
 	</div>

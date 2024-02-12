@@ -85,8 +85,18 @@ class WorkSession extends Model {
 	/**
 	 * SCOPES
 	 */
-	public function scopeIsActive($query)
+	public function scopeIsRunning($query)
 	{
 	    return $query->whereNull('ended_at');
+	}
+
+	public function scopeIsCompleted($query)
+	{
+	    return $query->whereNotNull('ended_at');
+	}
+	
+	public function scopeCreatedToday($query)
+	{
+	    return $query->where('created_at', '>=', Carbon::today());
 	}
 }

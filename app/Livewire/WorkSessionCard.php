@@ -25,7 +25,7 @@ class WorkSessionCard extends Component
     
     public function render()
     {
-        $this->workSession = WorkSession::where('workspace_id', $this->workspace->id)->isActive()->orderBy('created_at', 'DESC')->first();
+        $this->workSession = WorkSession::where('workspace_id', $this->workspace->id)->isRunning()->orderBy('created_at', 'DESC')->first();
         return view('livewire.work-session-card');
     }    
 
@@ -57,6 +57,8 @@ class WorkSessionCard extends Component
         $this->workSession->save();
         
         $this->status = 'stop';
+        
+        $this->dispatch('worksessionended');
     }
     
 }
