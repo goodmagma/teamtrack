@@ -1,4 +1,4 @@
-<form wire:submit.prevent="registerWorkSession" x-on:close-modal="document.getElementById('close-modal').click();">
+<form wire:submit.prevent="registerWorkSession" x-on:worksessionstarted="document.getElementById('close-modal').click();">
     @csrf
 	<div class="modal-content">
     	<div class="modal-header">

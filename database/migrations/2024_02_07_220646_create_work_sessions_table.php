@@ -17,6 +17,7 @@ return new class extends Migration
             $table->timestamp('started_at');
             $table->timestamp('ended_at')->nullable();
             $table->timestamp('paused_at')->nullable();
+            $table->unsignedInteger('pause_duration')->default(0);
             $table->string('description')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->ulid('workspace_id');

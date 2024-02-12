@@ -2,12 +2,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Carbon\Carbon;
 
 class WorkSession extends Model {
 
-    use SoftDeletes;
-    
 	protected $table = 'work_sessions';
 	
 	protected $casts = [
@@ -55,5 +54,39 @@ class WorkSession extends Model {
 	public function task()
 	{
 	    return $this->belongsTo(Task::class);
+	}
+	
+	/**
+	 * ATTRIBUTES
+	 */
+	public function liveDuration(): Attribute
+	{
+	    $duration = $this->started_at->diffInSeconds(Carbon::now());
+	    
+	    if( !empty( $this->paused_at ) ){
+	        $duration = $duration - $this->paused_at->diffInSeconds(Carbon::now());
+	    }
+	    else{
+	        $duration = $duration - $this->pause_duration;
+	    }
+
+	    return Attribute::make(
+	        get: fn () => $duration
+        );
+	}
+	
+	public function isPaused(): Attribute
+	{
+	    return Attribute::make(
+	        get: fn () => $this->paused_at !== null
+        );
+	}
+	
+	/**
+	 * SCOPES
+	 */
+	public function scopeIsActive($query)
+	{
+	    return $query->whereNull('ended_at');
 	}
 }

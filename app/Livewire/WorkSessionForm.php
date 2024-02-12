@@ -65,7 +65,7 @@ class WorkSessionForm extends Component
         
         $workSession->save();
         
-        $this->dispatch('close-modal');
+        $this->dispatch('worksessionstarted');
     }
-    
+
 }
