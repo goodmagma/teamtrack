@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\WorkSession;
+use Livewire\Attributes\On;
 use Carbon\Carbon;
 
 class WorkSessionCard extends Component
@@ -14,7 +15,12 @@ class WorkSessionCard extends Component
     
     public function mount(){
         $this->workSession = null;
-        $this->status = 'active';
+        $this->status = 'run';
+    }
+    
+    #[On('worksessionstarted')]
+    public function refreshComponent() 
+    {
     }
     
     public function render()
@@ -26,12 +32,16 @@ class WorkSessionCard extends Component
     public function pauseWorkSession() {
         $this->workSession->paused_at = Carbon::now();
         $this->workSession->save();
+        
+        $this->status = 'pause';
     }
 
     public function resumeWorkSession() {
         $this->workSession->pause_duration = $this->workSession->paused_at->diffInSeconds(Carbon::now());
         $this->workSession->paused_at = null;
         $this->workSession->save();
+
+        $this->status = 'run';
     }
     
     public function stopWorkSession() {
@@ -46,7 +56,7 @@ class WorkSessionCard extends Component
 
         $this->workSession->save();
         
-        $this->status = 'closed';
+        $this->status = 'stop';
     }
     
 }
