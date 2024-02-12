@@ -10,6 +10,13 @@ class WorkSession extends Model {
     
 	protected $table = 'work_sessions';
 	
+	protected $casts = [
+	    'started_at'   => 'datetime',
+	    'ended_at'   => 'datetime',
+	    'paused_at'   => 'datetime',
+	];
+
+	
 	/**
 	 * Get User
 	 *

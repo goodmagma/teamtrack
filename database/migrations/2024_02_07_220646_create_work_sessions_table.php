@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('work_sessions', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('duration')->default(0);
-            $table->timestamp('start');
-            $table->timestamp('end');
+            $table->timestamp('started_at');
+            $table->timestamp('ended_at')->nullable();
+            $table->timestamp('paused_at')->nullable();
             $table->string('description')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->ulid('workspace_id');

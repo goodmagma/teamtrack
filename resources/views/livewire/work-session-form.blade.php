@@ -1,4 +1,4 @@
-<form action="#" method="POST">
+<form wire:submit.prevent="registerWorkSession" x-on:close-modal="document.getElementById('close-modal').click();">
     @csrf
 	<div class="modal-content">
     	<div class="modal-header">
@@ -33,7 +33,7 @@
 
 			<div class="mb-3">
 				<label class="form-label">{{__("Description")}}</label>
-				<input type="text" class="form-control" name="description" required>
+				<input type="text" class="form-control" name="description" wire:model="description" required>
 			</div>
 			
 			<label class="form-label">{{__("Session Mode")}}</label>
@@ -71,37 +71,27 @@
 		<div class="modal-body">
 			<div class="row">
 				<div class="col-lg-6">
-					<label class="form-label">Start At</label>
-					<div class="row">
-    					<div class="col-lg-8">
-    						<input type="date" id="start_date" name="start_date" wire:model="start_date" class="form-control" autocomplete="off" {{$session_mode == 'run' ? 'disabled' : ''}}>
-    					</div>
-    					<div class="col-lg-4">
-    						<input type="text" id="start_time" name="start_time" wire:model="start_time" class="form-control" data-mask="00:00" data-mask-visible="true" autocomplete="off" {{$session_mode == 'run' ? 'disabled' : ''}}>
-    					</div>
-    				</div>
+					<div class="mb-3">
+						<label class="form-label">Start</label>
+						<input type="text" id="started_at" name="started_at" wire:model="started_at" class="form-control" autocomplete="off" data-mask="00/00/0000 00:00" data-mask-visible="true" {{$session_mode == 'run' ? 'disabled' : ''}}>
+					</div>
 				</div>
 				<div class="col-lg-6">
-					<label class="form-label">Start At</label>
-					<div class="row">
-    					<div class="col-lg-8">
-    						<input type="date" id="end_date" name="end_date" wire:model="end_date" class="form-control" autocomplete="off" {{$session_mode == 'run' ? 'disabled' : ''}}>
-    					</div>
-    					<div class="col-lg-4">
-    						<input type="text" id="end_time" name="end_time" wire:model="end_time" class="form-control" data-mask="00:00" data-mask-visible="true" autocomplete="off" {{$session_mode == 'run' ? 'disabled' : ''}}>
-    					</div>
-    				</div>
+					<div class="mb-3">
+						<label class="form-label">End</label>
+						<input type="text" id="ended_at" name="ended_at" wire:model="ended_at" class="form-control" autocomplete="off" data-mask="00/00/0000 00:00" data-mask-visible="true" {{$session_mode == 'run' ? 'disabled' : ''}}>
+					</div>
 				</div>
         	</div>
 		</div>
 		<div class="modal-footer">
-            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+            <a href="#" id="close-modal" class="btn btn-link link-secondary" data-bs-dismiss="modal">
               Cancel
             </a>
-            <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-              {{$session_mode == 'run' ? __("Run") : __("Add")}}
-            </a>
+            <button type="submit" class="btn btn-primary ms-auto">
+				<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+            	{{$session_mode == 'run' ? __("Run") : __("Add")}}
+            </button>
 		</div>
 	</div>
 
