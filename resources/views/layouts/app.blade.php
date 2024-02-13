@@ -104,15 +104,15 @@
                     	<div class="row flex-fill align-items-center">
                         	<div class="col">
                                 <ul class="navbar-nav">
-                                    
+									
+									@isset($workspace->id)
                                     <li class="nav-item {{ Request::routeIs('workspaces.dashboard*') ? 'active' : '' }}">
-                                        <a class="nav-link" href="{{ route('dashboard') }}">
+                                        <a class="nav-link" href="{{ route('workspaces.dashboard', $workspace) }}">
                                             <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-dashboard"></i></span>
                                             <span class="nav-link-title">{{__("Dashboard")}}</span>
                                         </a>
                                     </li>
-									
-									@isset($workspace->id)
+
                                     <li class="nav-item {{ Request::routeIs('reports*') ? 'active' : '' }}">
                                         <a class="nav-link" href="{{ route('reports.index', $workspace) }}">
                                             <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-report-analytics"></i></span>
