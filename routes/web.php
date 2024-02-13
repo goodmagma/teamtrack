@@ -54,6 +54,21 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/edit', [App\Http\Controllers\WorkspaceController::class, 'edit'])->name('workspaces.edit');
         Route::post('/update', [App\Http\Controllers\WorkspaceController::class, 'update'])->name('workspaces.update');
         Route::get('/delete', [App\Http\Controllers\WorkspaceController::class, 'delete'])->name('workspaces.delete');
+
+        // Projects
+        Route::group(['prefix' => 'projects'], function () {
+            Route::get('/', [App\Http\Controllers\ProjectController::class, 'index'])->name('projects.index');
+            Route::get('/new', [App\Http\Controllers\ProjectController::class, 'new'])->name('projects.new');
+            Route::post('/save', [App\Http\Controllers\ProjectController::class, 'save'])->name('projects.save');
+            Route::get('/{project}/edit', [App\Http\Controllers\ProjectController::class, 'edit'])->name('projects.edit');
+            Route::post('/{project}/update', [App\Http\Controllers\ProjectController::class, 'update'])->name('projects.update');
+            Route::get('/{project}/delete', [App\Http\Controllers\ProjectController::class, 'delete'])->name('projects.delete');
+        });
+
+        // Reports
+        Route::group(['prefix' => 'reports'], function () {
+            Route::get('/', [App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
+        });
         
         // Projects
         Route::group(['prefix' => 'projects'], function () {

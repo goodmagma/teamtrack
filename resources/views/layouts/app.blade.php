@@ -111,6 +111,13 @@
                                             <span class="nav-link-title">{{__("Dashboard")}}</span>
                                         </a>
                                     </li>
+
+                                    <li class="nav-item {{ Request::routeIs('reports*') ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('reports.index', $workspace) }}">
+                                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-report-analytics"></i></span>
+                                            <span class="nav-link-title">{{__("Reports")}}</span>
+                                        </a>
+                                    </li>
 									
 									@isset($workspace->id)
                                     <li class="nav-item {{ Request::routeIs('projects*') ? 'active' : '' }}">
