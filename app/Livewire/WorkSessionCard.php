@@ -50,7 +50,7 @@ class WorkSessionCard extends Component
             $this->resumeWorkSession();
         }
 
-        WorkSessionService::close($this->workSession);
+        WorkSessionService::close($this->workSession, true);
         
         $this->status = 'stop';
         
