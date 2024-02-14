@@ -43,7 +43,7 @@ class WorkSessionReports extends Component
             $query->where('task_id', $this->task_id);
         }
         
-        $workSessions = $query->orderBy('created_at', 'DESC')->paginate(25);
+        $workSessions = $query->orderBy('started_at', 'DESC')->paginate(25);
         
         return view('livewire.work-session-reports', compact('workSessions'));
     }
