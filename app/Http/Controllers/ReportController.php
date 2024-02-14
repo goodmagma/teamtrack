@@ -35,10 +35,7 @@ class ReportController extends Controller {
      */
     public function index(Request $request, Workspace $workspace)
     {
-        //get projects
-        $workSessions = WorkSession::where('workspace_id', $workspace->id)->paginate(10);
-        
-        return view('reports.index', compact('workspace', 'workSessions'));
+        return view('reports.index', compact('workspace'));
     }
 
 }

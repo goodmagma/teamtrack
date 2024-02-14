@@ -1,7 +1,7 @@
 <div class="card">
 	<div class="card-body">
     	<div class="row g-2 align-items-center">
-    		<div class="col-sm-6 col-md-10" wire:poll.1s>
+    		<div class="col" wire:poll.1s>
 				@if( !empty($workSession) )
     				<div class="row">
             			<div class="col-auto">
@@ -59,7 +59,7 @@
             		</div>
             	@endif
 			</div>
-			<div class="col-sm-6 col-md-2">
+			<div class="col-auto ms-auto d-print-none">
     			<div class="row">			
         			<div class="col-auto">
         				<div class="btn-list">
