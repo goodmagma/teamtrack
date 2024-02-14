@@ -15,7 +15,7 @@ class WorkSessionList extends Component
         $this->template = 'daily';
     }
     
-    #[On('worksessionended')]
+    #[On('worksessionupdated')]
     public function refreshComponent() 
     {
     }

@@ -1,4 +1,4 @@
-<form wire:submit.prevent="registerWorkSession" x-on:worksessionstarted="document.getElementById('close-modal').click();">
+<form wire:submit.prevent="registerWorkSession" x-on:worksessionupdated="document.getElementById('close-modal').click();">
     @csrf
 	<div class="modal-content">
     	<div class="modal-header">
@@ -73,13 +73,13 @@
 				<div class="col-lg-6">
 					<div class="mb-3">
 						<label class="form-label">Start</label>
-						<input type="text" id="started_at" name="started_at" wire:model="started_at" class="form-control" autocomplete="off" data-mask="00/00/0000 00:00" data-mask-visible="true" {{$session_mode == 'run' ? 'disabled' : ''}}>
+						<input type="datetime-local" id="started_at" name="started_at" wire:model="started_at" class="form-control" autocomplete="off" data-mask-visible="true" {{$session_mode == 'run' ? 'disabled' : ''}}>
 					</div>
 				</div>
 				<div class="col-lg-6">
 					<div class="mb-3">
 						<label class="form-label">End</label>
-						<input type="text" id="ended_at" name="ended_at" wire:model="ended_at" class="form-control" autocomplete="off" data-mask="00/00/0000 00:00" data-mask-visible="true" {{$session_mode == 'run' ? 'disabled' : ''}}>
+						<input type="datetime-local" id="ended_at" name="ended_at" wire:model="ended_at" class="form-control" autocomplete="off" data-mask-visible="true" {{$session_mode == 'run' ? 'disabled' : ''}}>
 					</div>
 				</div>
         	</div>

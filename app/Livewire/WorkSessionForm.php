@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Task;
 use App\Models\WorkSession;
 use Carbon\Carbon;
+use App\Services\WorkSessionService;
 
 class WorkSessionForm extends Component
 {
@@ -25,8 +26,10 @@ class WorkSessionForm extends Component
         $this->projects = Project::where('workspace_id', $this->workspace->id)->orderBy('name', 'ASC')->get();
         $this->tasks = array();
         $this->session_mode = "run";
-        $this->started_at = date("d/m/Y H:i");
-        $this->ended_at = date("d/m/Y H:i");
+        
+        $now = Carbon::now();
+        $this->started_at = $now->format("Y-m-d\TH:i");
+        $this->ended_at = $now->addHour()->format("Y-m-d\TH:i");
     }
     
     public function render()
@@ -59,13 +62,25 @@ class WorkSessionForm extends Component
             $workSession->started_at = Carbon::now();
         }
         else{
-            $workSession->started_at = $this->started_at;
-            $workSession->ended_at = $this->ended_at;
+            $workSession->started_at = Carbon::create($this->started_at);
+            $workSession->ended_at = Carbon::create($this->ended_at);
+            
+            $workSession = WorkSessionService::updateDuration($workSession);
         }
         
         $workSession->save();
-        
-        $this->dispatch('worksessionstarted');
+
+        $this->dispatch('worksessionupdated');
     }
 
+    
+    public function getStartedAtAttribute($value)
+    {
+        return Carbon::create($value)->format("Y-m-d\TH:i");
+    }
+    
+    public function getEndedAtAttribute($value)
+    {
+        return Carbon::create($value)->format("Y-m-d\TH:i");
+    }
 }

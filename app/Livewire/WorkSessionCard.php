@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\WorkSession;
 use Livewire\Attributes\On;
 use Carbon\Carbon;
+use App\Services\WorkSessionService;
 
 class WorkSessionCard extends Component
 {
@@ -18,7 +19,7 @@ class WorkSessionCard extends Component
         $this->status = 'run';
     }
     
-    #[On('worksessionstarted')]
+    #[On('worksessionupdated')]
     public function refreshComponent() 
     {
     }
@@ -48,17 +49,12 @@ class WorkSessionCard extends Component
         if( !empty( $this->workSession->paused_at ) ){
             $this->resumeWorkSession();
         }
-        
-        $this->workSession->ended_at = Carbon::now();
 
-        $duration = $this->workSession->started_at->diffInSeconds($this->workSession->ended_at);
-        $this->workSession->duration = $duration - $this->workSession->pause_duration;
-
-        $this->workSession->save();
+        WorkSessionService::close($this->workSession);
         
         $this->status = 'stop';
         
-        $this->dispatch('worksessionended');
+        $this->dispatch('worksessionupdated');
     }
     
 }

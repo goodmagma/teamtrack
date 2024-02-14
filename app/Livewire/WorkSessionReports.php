@@ -25,7 +25,7 @@ class WorkSessionReports extends Component
         $this->tasks = array();
     }
     
-    #[On('worksessionended')]
+    #[On('worksessionupdated')]
     public function refreshComponent() 
     {
     }
