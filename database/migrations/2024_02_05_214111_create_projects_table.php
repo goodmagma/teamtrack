@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
 			$table->unsignedBigInteger('user_id');
-			$table->unsignedBigInteger('workspace_id');
+			$table->ulid('workspace_id');
             $table->string('name');
             $table->string('description')->nullable();
 

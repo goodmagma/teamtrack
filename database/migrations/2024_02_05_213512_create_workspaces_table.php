@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('workspaces', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id')->index()->primary();
 			$table->unsignedBigInteger('user_id');
             $table->string('name');
+
             $table->timestamps();
 			$table->softDeletes();
 

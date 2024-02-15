@@ -27,9 +27,35 @@
 					<a href="{{ route('dashboard') }}"><img src="{{ asset('build/images/logo.svg') }}" height="36" alt="{{ config('app.name') }}"></a>
 				</h1>
 				<div class="navbar-nav flex-row order-md-last">
+
+                    <div class="nav-item d-none d-md-flex me-3">
+						<div class="btn-list">
+							<span class="dropdown">
+								<button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="true">
+									<span class="avatar avatar-xs rounded me-2">{{$workspace->getInitials()}}</span>
+									{{$workspace->name}}
+								</button>
+								<div class="dropdown-menu dropdown-menu-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 41.6px, 0px);" data-popper-placement="bottom-end">
+									@foreach($workspaces as $ws)
+    									@if($ws->id != $workspace->id)
+        									<a class="dropdown-item" href="{{route('workspaces.switch', $ws)}}">
+        										<span class="avatar avatar-xs rounded me-2">{{$ws->getInitials()}}</span>
+        										{{$ws->name}}
+        									</a>
+        								@endif
+									@endforeach
+									<a class="dropdown-item" href="{{route('workspaces.new')}}">
+										<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+										{{__("New Workspace")}}
+									</a>
+								</div>
+							</span>
+						</div>
+                    </div>
+				
 					@impersonating
 					<!-- Impersonate User -->
-					<div class="nav-item dropdown d-md-flex me-3">
+					<div class="d-none d-md-flex">
 						<a href="{{ route('profile.impersonate.leave') }}" class="nav-link px-0" title="Leave Impersonate User {{auth()->user()->firstname}} {{auth()->user()->lastname}}" data-bs-toggle="tooltip" data-bs-placement="bottom">
 							<i class="ti ti-user-x"></i>
 						</a>
@@ -38,7 +64,7 @@
 					@endImpersonating
 
 					<!-- Theme Switch -->
-					<div class="nav-item dropdown d-none d-md-flex me-3">
+					<div class="d-none d-md-flex">
 						<a href="{{ route('profile.themeSwitch') }}" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
 							<i class="ti ti-moon"></i>
 						</a>
@@ -78,13 +104,36 @@
                     	<div class="row flex-fill align-items-center">
                         	<div class="col">
                                 <ul class="navbar-nav">
-                                    
-                                    <li class="nav-item {{ Request::routeIs('dashboard*') ? 'active' : '' }}">
-                                        <a class="nav-link" href="{{ route('dashboard') }}">
+									
+									@isset($workspace->id)
+                                    <li class="nav-item {{ Request::routeIs('workspaces.dashboard*') ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('workspaces.dashboard', $workspace) }}">
                                             <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-dashboard"></i></span>
                                             <span class="nav-link-title">{{__("Dashboard")}}</span>
                                         </a>
                                     </li>
+
+                                    <li class="nav-item {{ Request::routeIs('reports*') ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('reports.index', $workspace) }}">
+                                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-report-analytics"></i></span>
+                                            <span class="nav-link-title">{{__("Reports")}}</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item {{ Request::routeIs('projects*') ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('projects.index', $workspace) }}">
+                                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-subtask"></i></span>
+                                            <span class="nav-link-title">{{__("Projects")}}</span>
+                                        </a>
+                                    </li>
+                                    
+                                    <li class="nav-item {{ Request::routeIs('tasks*') ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('tasks.index', $workspace) }}">
+                                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-list-check"></i></span>
+                                            <span class="nav-link-title">{{__("Task")}}</span>
+                                        </a>
+                                    </li>
+                                    @endisset
                                         
 								</ul>
 							</div>
@@ -98,34 +147,41 @@
 		<!-- Page -->
 		<div class="page-wrapper">
 
-			<div class="container-xl">
+			<div class="page-header d-print-none">
 
-				<div class="page-header d-print-none">
+				<div class="container-xl">
     					
-					<div class="row align-items-center">
+					<div class="row g-2 align-items-center">
 						@hasSection('breadcrumb')
     						<div class="mb-1">
     							@yield('breadcrumb')
 							</div>
     					@endif
 
-						<div class="col">
-							@hasSection('pretitle')<div class="page-pretitle">@yield('pretitle')</div>@endif
-							<h2 class="page-title">@yield('title')</h2>
-							@hasSection('subtitle')<div class="text-muted mt-1">@yield('subtitle')</div>@endif
-						</div>
+						@hasSection('title')
+    						<div class="col">
+    							@hasSection('pretitle')<div class="page-pretitle">@yield('pretitle')</div>@endif
+    							<h2 class="page-title">@yield('title')</h2>
+    							@hasSection('subtitle')<div class="text-muted mt-1">@yield('subtitle')</div>@endif
+    						</div>
+						@endif
 
 						@hasSection('actions')
-						<!-- Page title actions -->
-						<div class="col-auto ms-auto d-print-none">
-							<div class="btn-list">
-								@yield('actions')
-                			</div>
-              			</div>
+    						<!-- Page title actions -->
+    						<div class="col-auto ms-auto d-print-none">
+    							<div class="btn-list">
+    								@yield('actions')
+                    			</div>
+                  			</div>
               			@endif
-
+              			
+              			@hasSection('pageheader')
+              				@yield('pageheader')
+              			@endif
 					</div>
+
 				</div>
+
 			</div>
 
 			<div class="page-body">
@@ -172,9 +228,10 @@
 
 	</div>
 
+	@yield('modals')
+
 	<!-- Libs JS -->
 	<script src="{{ asset('build/js/tom-select.base.min.js') }}"></script>
-    <script src="{{ asset('build/js/dropzone-min.js') }}"></script>
 
 	<!-- Tabler Core -->
     <script src="{{ asset('build/js/tabler.min.js') }}"></script>

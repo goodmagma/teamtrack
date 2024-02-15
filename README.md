@@ -6,6 +6,20 @@
 Teamtrack is a time tracking software for teams based on Laravel 10.x
 
 
+# About TeamTrack
+
+TeamTrack is a web-based and self-hosted time-tracking application, free and open-source. It handles use-cases of freelancers as well as companies with dozens or hundreds of users. 
+
+![overview](resources/images/screenshot.png)
+
+## ✨ Features
+
+Main features:
+
+-   Multiple Workspaces
+-   Projects / Tasks Management
+-   Work Session Management
+
 # Installation
 
 ```
