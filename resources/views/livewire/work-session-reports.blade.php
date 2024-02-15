@@ -4,21 +4,39 @@
 			<div class="form-label">{{__("Period")}}</div>
 			<div class="mb-4">
 				<label class="form-check">
-                	<input type="radio" class="form-check-input" name="form-salary" value="1" checked="">
-					<span class="form-check-label">{{__("January")}} 2024</span>
+                	<input type="radio" class="form-check-input" name="period" wire:model="period" value="1W" wire:change.prevent="updateSearch">
+					<span class="form-check-label">{{__("This Week")}}</span>
 				</label>
 				<label class="form-check">
-                  <input type="radio" class="form-check-input" name="form-salary" value="2" checked="">
-                  <span class="form-check-label">{{__("December")}} 2023</span>
+                	<input type="radio" class="form-check-input" name="period" wire:model="period" value="2W" wire:change.prevent="updateSearch">
+					<span class="form-check-label">{{__("Previous Week")}}</span>
+				</label>
+				<label class="form-check">
+                	<input type="radio" class="form-check-input" name="period" wire:model="period" value="1M" wire:change.prevent="updateSearch">
+					<span class="form-check-label">{{__($period_months[0]['label'])}} {{$period_months[0]['year']}}</span>
+				</label>
+				<label class="form-check">
+                  <input type="radio" class="form-check-input" name="period" wire:model="period" value="2M" wire:change.prevent="updateSearch">
+                  <span class="form-check-label">{{__($period_months[1]['label'])}} {{$period_months[1]['year']}}</span>
                 </label>
 				<label class="form-check">
-                  <input type="radio" class="form-check-input" name="form-salary" value="2" checked="">
-                  <span class="form-check-label">{{__("November")}} 2023</span>
+                  <input type="radio" class="form-check-input" name="period" wire:model="period" value="3M" wire:change.prevent="updateSearch">
+                  <span class="form-check-label">{{__($period_months[2]['label'])}} {{$period_months[2]['year']}}</span>
                 </label>
+			</div>
+            <div class="form-label">{{__("From - To")}}</div>
+			<div class="row g-2 align-items-center mb-3">
+				<div class="col">
+					<input type="date" id="from_date" name="from_date" wire:model="from_date" class="form-control" autocomplete="off" data-mask-visible="true">
+				</div>
+                <div class="col-auto">—</div>
+				<div class="col">
+					<input type="date" id="to_date" name="to_date" wire:model="to_date" class="form-control" autocomplete="off" data-mask-visible="true" wire:change.prevent="updateSearch">
+				</div>
 			</div>
 			<div class="form-label">{{__("Project")}}</div>
             <div class="mb-4">
-				<select class="form-select" id="project_id" name="project_id" wire:model="project_id" wire:change.prevent="search">
+				<select class="form-select" id="project_id" name="project_id" wire:model="project_id" wire:change.prevent="updateSearch">
 					<option value=""></option>
 					@foreach($projects as $project)
 					<option value="{{$project->id}}">{{$project->name}}</option>
@@ -27,7 +45,7 @@
             </div>
 			<div class="form-label">{{__("Task")}}</div>
             <div class="mb-4">
-				<select class="form-select" id="task_id" name="task_id" wire:model="task_id" wire:change.prevent="search">
+				<select class="form-select" id="task_id" name="task_id" wire:model="task_id" wire:change.prevent="updateSearch">
 					<option value=""></option>
 					@foreach($tasks as $task)
 					<option value="{{$task->id}}">{{$task->title}}</option>

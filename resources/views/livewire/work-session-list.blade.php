@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">{{__("Work Sessions")}} ({{ $workSessions->count() }})</h3>
+        <h3 class="card-title">{{ $template == 'daily' ? __("Today") : __("Work Sessions")}} ({{ $workSessions->count() }})</h3>
     </div>
     <div class="card-body">
         <div class="table-responsive">
