@@ -6,20 +6,38 @@ use Livewire\Component;
 use App\Models\WorkSession;
 use Livewire\Attributes\On;
 
+/**
+ * Work Session List Livewire component
+ * 
+ * @author Denis
+ */
 class WorkSessionList extends Component
 {
     public $workspace;
     public $template;
     
+    
+    /**
+     * Mount component
+     */
     public function mount(){
         $this->template = 'daily';
     }
     
+    /**
+     * Listener for refresh component from external components
+     */
     #[On('worksessionupdated')]
     public function refreshComponent() 
     {
     }
     
+    
+    /**
+     * Render
+     * 
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function render()
     {
         if( $this->template == 'daily' ){

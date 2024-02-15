@@ -9,6 +9,11 @@ use App\Models\Project;
 use Carbon\Carbon;
 use App\Models\Task;
 
+/**
+ * Work Session Reports Livewire component
+ * 
+ * @author Denis
+ */
 class WorkSessionReports extends Component
 {
     public $workspace;
@@ -21,6 +26,9 @@ class WorkSessionReports extends Component
     public $project_id;
     public $task_id;
 
+    /**
+     * Mount component
+     */
     public function mount(){
         $this->period_months = array(
             [
@@ -47,11 +55,12 @@ class WorkSessionReports extends Component
         
     }
     
-    #[On('worksessionupdated')]
-    public function refreshComponent() 
-    {
-    }
     
+    /**
+     * Render
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function render()
     {
         $query = WorkSession::query();
@@ -72,6 +81,10 @@ class WorkSessionReports extends Component
         return view('livewire.work-session-reports', compact('workSessions'));
     }
     
+    
+    /**
+     * Update search criteria Action
+     */
     public function updateSearch() {
         if($this->period == '1W') {
             $this->from_date = Carbon::today()->startOfWeek()->format("Y-m-d");
@@ -101,17 +114,4 @@ class WorkSessionReports extends Component
             $this->tasks = array();
         }
     }
-    
-    /*
-    public function getFromDateAttribute($value)
-    {
-        return Carbon::create($value)->format("Y-m-d\TH:i");
-    }
-    
-    public function getToDateAttribute($value)
-    {
-        return Carbon::create($value)->format("Y-m-d\TH:i");
-    }
-    */
-    
 }
