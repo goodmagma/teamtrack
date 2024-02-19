@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\WorkSession;
-use Livewire\Attributes\On;
 use App\Models\Project;
 use Carbon\Carbon;
 use App\Models\Task;
@@ -51,8 +50,6 @@ class WorkSessionReports extends Component
         
         $this->from_date = Carbon::today()->startOfWeek()->format("Y-m-d");
         $this->to_date = Carbon::today()->endOfWeek()->format("Y-m-d");
-        
-        
     }
     
     
