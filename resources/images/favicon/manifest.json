@@ -1,8 +1,8 @@
 {
-    "name": "CloudConversa",
-    "short_name": "CloudConversa",
-    "description": "Human Intelligence in A.I.",
-    "start_url": "/dashboard",
+    "name": "TeamTrack",
+    "short_name": "TeamTrack",
+    "description": "Time Tracking for Teams",
+    "start_url": "/",
     "display": "standalone",
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
