@@ -14,6 +14,7 @@ use App\Models\Task;
  * @author Denis
  */
 class TaskController extends Controller {
+
     /**
      * Create a new controller instance.
      *

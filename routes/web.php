@@ -90,6 +90,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/{task}/delete', [App\Http\Controllers\TaskController::class, 'delete'])->name('tasks.delete');
         });
 
+        // WorkSession
+        Route::group(['prefix' => 'worksessions'], function () {
+            Route::get('/{workSession}/edit', [App\Http\Controllers\WorkSessionController::class, 'edit'])->name('worksessions.edit');
+        });
     });
     
     // Profile

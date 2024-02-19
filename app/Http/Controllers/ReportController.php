@@ -13,7 +13,7 @@ use App\Models\WorkSession;
  * @author Denis
  */
 class ReportController extends Controller {
-    
+
     /**
      * Create a new controller instance.
      *

@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Workspace;
 use App\Models\Project;
+use App\Models\User;
+use App\Models\Workspace;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Accounts Controller
@@ -16,6 +14,7 @@ use App\Models\Project;
  * @author Denis
  */
 class WorkspaceController extends Controller {
+
     /**
      * Create a new controller instance.
      *

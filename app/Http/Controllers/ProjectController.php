@@ -13,6 +13,7 @@ use App\Models\Project;
  * @author Denis
  */
 class ProjectController extends Controller {
+
     /**
      * Create a new controller instance.
      *

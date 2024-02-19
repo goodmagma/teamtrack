@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
  * @author Denis
  */
 class HomeController extends Controller {
+
     /**
      * Create a new controller instance.
      *

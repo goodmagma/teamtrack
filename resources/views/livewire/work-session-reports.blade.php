@@ -87,7 +87,12 @@
                                             <td>{{!empty($workSession->task) ? $workSession->task->title : ''}}</td>
                                             <td>{{$workSession->description}}</td>
                                             <td>{{format_duration($workSession->duration)}}</td>
-                                            <td></td>
+                                            <td>
+                								<a class="d-inline-block" href="{{route('worksessions.edit', ['workspace' => $workspace, 'workSession' => $workSession])}}">
+                									Edit
+                									<i class="ti ti-edit"></i>
+                								</a>
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
