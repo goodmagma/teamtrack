@@ -27,8 +27,8 @@
 
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('build/images/favicon/favicon-16x16.png') }}">
    	<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('build/images/favicon/favicon-32x32.png') }}">
-   	<link rel="icon" type="image/png" sizes="196x196" href="{{ asset('build/images/favicon/favicon-196x196.png') }}">
-   	<link rel="icon" type="image/png" sizes="512x512" href="{{ asset('build/images/favicon/favicon-512x512.png') }}">
+   	<link rel="icon" type="image/png" sizes="196x196" href="{{ asset('build/images/favicon/android-chrome-192x192.png') }}">
+   	<link rel="icon" type="image/png" sizes="512x512" href="{{ asset('build/images/favicon/android-chrome-512x512.png') }}">
    	
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('build/images/favicon/apple-touch-icon.png') }}">    
 	<link rel="mask-icon" href="{{ asset('build/images/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
