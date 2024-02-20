@@ -82,6 +82,9 @@ class WorkSessionEdit extends Component
         $this->workSession->project_id = $this->project_id;
         $this->workSession->task_id = $this->task_id;
         $this->workSession->description = $this->description;
+
+        $this->workSession->pause_duration = 0;
+        $this->workSession->paused_at = null;
         
         $this->workSession->started_at = Carbon::create($this->started_at);
         $this->workSession->ended_at = Carbon::create($this->ended_at);
