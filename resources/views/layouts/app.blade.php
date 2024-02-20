@@ -32,17 +32,15 @@
 						<div class="btn-list">
 							<span class="dropdown">
 								<button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="true">
-									<span class="avatar avatar-xs rounded me-2">{{$workspace->getInitials()}}</span>
-									{{$workspace->name}}
+									<span class="avatar avatar-xs rounded me-2">{{isset($workspace) ? $workspace->getInitials() : ''}}</span>
+									{{isset($workspace) ? $workspace->name: ''}}
 								</button>
 								<div class="dropdown-menu dropdown-menu-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 41.6px, 0px);" data-popper-placement="bottom-end">
 									@foreach($workspaces as $ws)
-    									@if($ws->id != $workspace->id)
-        									<a class="dropdown-item" href="{{route('workspaces.switch', $ws)}}">
-        										<span class="avatar avatar-xs rounded me-2">{{$ws->getInitials()}}</span>
-        										{{$ws->name}}
-        									</a>
-        								@endif
+    									<a class="dropdown-item" href="{{route('workspaces.switch', $ws)}}">
+    										<span class="avatar avatar-xs rounded me-2">{{$ws->getInitials()}}</span>
+    										{{$ws->name}}
+    									</a>
 									@endforeach
 									<a class="dropdown-item" href="{{route('workspaces.new')}}">
 										<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
@@ -50,6 +48,14 @@
 									</a>
 								</div>
 							</span>
+							
+							@if(isset($workspace))
+							<div class="d-none d-md-flex">
+        						<a href="{{ route('workspaces.edit', $workspace) }}" class="nav-link px-0" title="{{__("Edit Workspace")}}" data-bs-toggle="tooltip" data-bs-placement="bottom">
+        							<i class="ti ti-edit"></i>
+        						</a>
+        					</div>
+        					@endif
 						</div>
                     </div>
 				

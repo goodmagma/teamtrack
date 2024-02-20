@@ -48,11 +48,20 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/save', [App\Http\Controllers\WorkspaceController::class, 'save'])->name('workspaces.save');
     });
 
+    // Profile
+    Route::group(['prefix' => 'profile'], function () {
+        Route::get('/', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+        Route::post('/', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+        Route::post('/password', [App\Http\Controllers\ProfileController::class, 'passwordUpdate'])->name('profile.password.update');
+        Route::get('/theme-switch', [App\Http\Controllers\ProfileController::class, 'themeSwitch'])->name('profile.themeSwitch');
+        Route::get('/impersonate/leave', [App\Http\Controllers\ProfileController::class, 'leaveImpersonation'])->name('profile.impersonate.leave');
+    });
+    
     // Workspace
     Route::group(['prefix' => '{workspace}'], function () {
         Route::get('/', [App\Http\Controllers\WorkspaceController::class, 'dashboard'])->name('workspaces.dashboard');
-        Route::get('/edit', [App\Http\Controllers\WorkspaceController::class, 'edit'])->name('workspaces.edit');
-        Route::post('/update', [App\Http\Controllers\WorkspaceController::class, 'update'])->name('workspaces.update');
+        Route::get('/workspace/edit', [App\Http\Controllers\WorkspaceController::class, 'edit'])->name('workspaces.edit');
+        Route::post('/workspace/update', [App\Http\Controllers\WorkspaceController::class, 'update'])->name('workspaces.update');
         Route::get('/delete', [App\Http\Controllers\WorkspaceController::class, 'delete'])->name('workspaces.delete');
 
         // Projects
@@ -94,15 +103,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::group(['prefix' => 'worksessions'], function () {
             Route::get('/{workSession}/edit', [App\Http\Controllers\WorkSessionController::class, 'edit'])->name('worksessions.edit');
         });
-    });
-    
-    // Profile
-    Route::group(['prefix' => 'profile'], function () {
-        Route::get('/', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
-        Route::post('/', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
-        Route::post('/password', [App\Http\Controllers\ProfileController::class, 'passwordUpdate'])->name('profile.password.update');
-        Route::get('/theme-switch', [App\Http\Controllers\ProfileController::class, 'themeSwitch'])->name('profile.themeSwitch');
-        Route::get('/impersonate/leave', [App\Http\Controllers\ProfileController::class, 'leaveImpersonation'])->name('profile.impersonate.leave');
     });
     
 });
