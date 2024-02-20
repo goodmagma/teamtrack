@@ -47,9 +47,8 @@ class WorkSessionReports extends Component
         $this->projects = Project::where('workspace_id', $this->workspace->id)->orderBy('name', 'ASC')->get();
         $this->tasks = array();
         $this->period = "1W";
-        
-        $this->from_date = Carbon::today()->startOfWeek()->format("Y-m-d");
-        $this->to_date = Carbon::today()->endOfWeek()->format("Y-m-d");
+
+        $this->updateSearch();
     }
     
     
@@ -110,5 +109,16 @@ class WorkSessionReports extends Component
         else{
             $this->tasks = array();
         }
+        
+        //send event for export component
+        $searchData = array(
+            'period' => $this->period,
+            'project_id' => $this->project_id,
+            'task_id' => $this->task_id,
+            'from_date' => $this->from_date,
+            'to_date' => $this->to_date
+        );
+        
+        $this->dispatch('reportsupdatesearch', $searchData);
     }
 }
