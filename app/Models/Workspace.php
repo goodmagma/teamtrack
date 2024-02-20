@@ -26,4 +26,11 @@ class Workspace extends Model {
 	    ->join(''); // Join the initials together
 	}
 	
+	
+	/**
+	 * Return true if has running working sessions
+	 */
+	public function hasRunningWorkSessions(){
+	    return WorkSession::where('workspace_id', $this->id)->isRunning()->count() > 0;
+	}
 }

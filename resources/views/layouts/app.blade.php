@@ -32,13 +32,19 @@
 						<div class="btn-list">
 							<span class="dropdown">
 								<button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="true">
-									<span class="avatar avatar-xs rounded me-2">{{isset($workspace) ? $workspace->getInitials() : ''}}</span>
+									<span class="avatar avatar-xs rounded me-2">
+										{{isset($workspace) ? $workspace->getInitials() : ''}}
+										@if($workspace->hasRunningWorkSessions())<span class="badge bg-success"></span>@endif
+									</span>
 									{{isset($workspace) ? $workspace->name: ''}}
 								</button>
 								<div class="dropdown-menu dropdown-menu-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 41.6px, 0px);" data-popper-placement="bottom-end">
 									@foreach($workspaces as $ws)
     									<a class="dropdown-item" href="{{route('workspaces.switch', $ws)}}">
-    										<span class="avatar avatar-xs rounded me-2">{{$ws->getInitials()}}</span>
+    										<span class="avatar avatar-xs rounded me-2">
+    											@if($ws->hasRunningWorkSessions())<span class="badge bg-success"></span>@endif
+    										{{$ws->getInitials()}}
+    										</span>
     										{{$ws->name}}
     									</a>
 									@endforeach
