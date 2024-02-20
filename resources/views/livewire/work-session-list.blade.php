@@ -19,7 +19,7 @@
 
                     @forelse($workSessions as $workSession)
                         <tr>
- 							<td>{{$workSession->started_at}}</td>
+ 							<td>{{format_date($workSession->started_at, $workSession->ended_at)}}</td>
                             <td>{{$workSession->project->name}}</td>
                             <td>{{!empty($workSession->task) ? $workSession->task->title : ''}}</td>
                             <td>{{$workSession->description}}</td>
