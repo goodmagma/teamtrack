@@ -99,4 +99,10 @@ class WorkSession extends Model {
 	{
 	    return $query->where('created_at', '>=', Carbon::today());
 	}
+	
+	public function scopeCompletedToday($query)
+	{
+	    return $query->where('ended_at', '>=', Carbon::today());
+	}
+
 }

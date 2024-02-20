@@ -41,10 +41,10 @@ class WorkSessionList extends Component
     public function render()
     {
         if( $this->template == 'daily' ){
-            $workSessions = WorkSession::where('workspace_id', $this->workspace->id)->isCompleted()->createdToday()->orderBy('started_at', 'DESC')->paginate(10);
+            $workSessions = WorkSession::where('workspace_id', $this->workspace->id)->isCompleted()->completedToday()->orderBy('ended_at', 'DESC')->paginate(10);
         }
         else{
-            $workSessions = WorkSession::where('workspace_id', $this->workspace->id)->isCompleted()->orderBy('started_at', 'DESC')->paginate(10);
+            $workSessions = WorkSession::where('workspace_id', $this->workspace->id)->isCompleted()->orderBy('ended_at', 'DESC')->paginate(10);
         }
 
         return view('livewire.work-session-list', compact('workSessions'));
