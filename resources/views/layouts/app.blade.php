@@ -34,7 +34,7 @@
 								<button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="true">
 									<span class="avatar avatar-xs rounded me-2">
 										{{isset($workspace) ? $workspace->getInitials() : ''}}
-										@if($workspace->hasRunningWorkSessions())<span class="badge bg-success"></span>@endif
+										@if(isset($workspace) && $workspace->hasRunningWorkSessions())<span class="badge bg-success"></span>@endif
 									</span>
 									{{isset($workspace) ? $workspace->name: ''}}
 								</button>
