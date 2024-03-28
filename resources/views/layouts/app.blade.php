@@ -33,18 +33,14 @@
 							<span class="dropdown">
 								<button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="true">
 									<span class="avatar avatar-xs rounded me-2">
-										{{isset($workspace) ? $workspace->getInitials() : ''}}
-										@if(isset($workspace) && $workspace->hasRunningWorkSessions())<span class="badge bg-success"></span>@endif
+										{{isset($active_workspace) ? $active_workspace->getInitials() : ''}}
 									</span>
-									{{isset($workspace) ? $workspace->name: ''}}
+									{{isset($active_workspace) ? $active_workspace->name: ''}}
 								</button>
 								<div class="dropdown-menu dropdown-menu-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 41.6px, 0px);" data-popper-placement="bottom-end">
-									@foreach($workspaces as $ws)
+									@foreach(Auth::user()->workspaces as $ws)
     									<a class="dropdown-item" href="{{route('workspaces.switch', $ws)}}">
-    										<span class="avatar avatar-xs rounded me-2">
-    											@if($ws->hasRunningWorkSessions())<span class="badge bg-success"></span>@endif
-    										{{$ws->getInitials()}}
-    										</span>
+    										<span class="avatar avatar-xs rounded me-2">{{$ws->getInitials()}}</span>
     										{{$ws->name}}
     									</a>
 									@endforeach
@@ -55,9 +51,9 @@
 								</div>
 							</span>
 							
-							@if(isset($workspace))
+							@if(isset($active_workspace))
 							<div class="d-none d-md-flex">
-        						<a href="{{ route('workspaces.edit', $workspace) }}" class="nav-link px-0" title="{{__("Edit Workspace")}}" data-bs-toggle="tooltip" data-bs-placement="bottom">
+        						<a href="{{ route('workspaces.edit', $active_workspace) }}" class="nav-link px-0" title="{{__("Edit Workspace")}}" data-bs-toggle="tooltip" data-bs-placement="bottom">
         							<i class="ti ti-edit"></i>
         						</a>
         					</div>
