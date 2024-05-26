@@ -69,11 +69,19 @@ class WorkSessionReports extends Component
         if( !empty( $this->task_id ) ) {
             $query->where('task_id', $this->task_id);
         }
-        
-        $query->whereBetween('started_at', [Carbon::create($this->from_date), Carbon::create($this->to_date)]);
-        
+
+        if( !empty( $this->from_date ) && !empty( $this->to_date )) {
+           $query->whereBetween('started_at', [Carbon::create($this->from_date), Carbon::create($this->to_date)]);
+        }
+        else if( !empty( $this->from_date ) ) {
+            $query->where('started_at', '>=', Carbon::create($this->from_date));
+        }
+        else if( !empty( $this->to_date ) ) {
+            $query->where('started_at', '<=', Carbon::create($this->to_date));
+        }
+
         $workSessions = $query->orderBy('started_at', 'DESC')->paginate(25);
-        
+
         return view('livewire.work-session-reports', compact('workSessions'));
     }
     
@@ -102,7 +110,11 @@ class WorkSessionReports extends Component
             $this->from_date = Carbon::today()->subMonths(2)->startOfMonth()->format("Y-m-d");
             $this->to_date = Carbon::today()->subMonths(2)->endOfMonth()->format("Y-m-d");
         }
-
+        else if($this->period == 'ALL') {
+            $this->from_date = null;
+            $this->to_date = null;
+        }
+        
         if( !empty( $this->project_id ) ) {
             $this->tasks = Task::where('project_id', $this->project_id)->orderBy('title', 'ASC')->get();
         }

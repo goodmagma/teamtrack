@@ -23,15 +23,23 @@
                   <input type="radio" class="form-check-input" name="period" wire:model="period" value="3M" wire:change.prevent="updateSearch">
                   <span class="form-check-label">{{__($period_months[2]['label'])}} {{$period_months[2]['year']}}</span>
                 </label>
+				<label class="form-check">
+                  <input type="radio" class="form-check-input" name="period" wire:model="period" value="ALL" wire:change.prevent="updateSearch">
+                  <span class="form-check-label">{{__("All")}}</span>
+                </label>
+				<label class="form-check">
+                  <input type="radio" class="form-check-input" name="period" wire:model="period" value="CUSTOM" wire:change.prevent="updateSearch">
+                  <span class="form-check-label">{{__("Custom")}}</span>
+                </label>
 			</div>
             <div class="form-label">{{__("From - To")}}</div>
 			<div class="row g-2 align-items-center mb-3">
 				<div class="col">
-					<input type="date" id="from_date" name="from_date" wire:model="from_date" class="form-control" autocomplete="off" data-mask-visible="true">
+					<input type="date" id="from_date" name="from_date" wire:model="from_date" class="form-control" autocomplete="off" data-mask-visible="true" {{$period != 'CUSTOM' ? 'disabled' : ''}}>
 				</div>
                 <div class="col-auto">—</div>
 				<div class="col">
-					<input type="date" id="to_date" name="to_date" wire:model="to_date" class="form-control" autocomplete="off" data-mask-visible="true" wire:change.prevent="updateSearch">
+					<input type="date" id="to_date" name="to_date" wire:model="to_date" class="form-control" autocomplete="off" data-mask-visible="true" wire:change.prevent="updateSearch" {{$period != 'CUSTOM' ? 'disabled' : ''}}>
 				</div>
 			</div>
 			<div class="form-label">{{__("Project")}}</div>
