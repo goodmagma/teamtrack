@@ -73,7 +73,16 @@ class WorkSessionReportsExport extends Component
             $query->where('task_id', $this->task_id);
         }
         
-        $query->whereBetween('started_at', [Carbon::create($this->from_date), Carbon::create($this->to_date)]);
+        //filter by dates
+        if( !empty( $this->from_date ) && !empty( $this->to_date )) {
+            $query->whereBetween('started_at', [Carbon::create($this->from_date), Carbon::create($this->to_date)]);
+        }
+        else if( !empty( $this->from_date ) ) {
+            $query->where('started_at', '>=', Carbon::create($this->from_date));
+        }
+        else if( !empty( $this->to_date ) ) {
+            $query->where('started_at', '<=', Carbon::create($this->to_date));
+        }
         
         $workSessions = $query->orderBy('started_at', 'DESC')->get();
         

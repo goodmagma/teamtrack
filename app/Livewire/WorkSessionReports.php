@@ -70,6 +70,7 @@ class WorkSessionReports extends Component
             $query->where('task_id', $this->task_id);
         }
 
+        //filter by dates
         if( !empty( $this->from_date ) && !empty( $this->to_date )) {
            $query->whereBetween('started_at', [Carbon::create($this->from_date), Carbon::create($this->to_date)]);
         }
