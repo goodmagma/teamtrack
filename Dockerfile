@@ -170,6 +170,9 @@ RUN chmod +x /usr/local/bin/start-container
 
 RUN cat deployment/utilities.sh >> ~/.bashrc
 
+COPY --chown=${USER}:${USER} .env.example .env
+RUN php artisan key:generate
+
 EXPOSE 8000
 EXPOSE 443
 EXPOSE 443/udp
