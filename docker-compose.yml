@@ -1,0 +1,76 @@
+
+# Teamtrack Environment
+x-teamtrack-env: &teamtrack-env
+  APP_ENV: production
+  APP_DEBUG: false
+  DB_HOST: teamtrack-mysql
+  DB_PORT: 3306
+  DB_DATABASE: teamtrack
+  DB_USERNAME: teamtrack
+  DB_PASSWORD: teamtrack
+  
+
+services:
+
+
+  # Teamtrack Frontend Service
+  teamtrack-frontend:
+    image: teamtrack/frontend:latest
+    container_name: teamtrack-frontend
+    restart: unless-stopped
+    depends_on:
+      teamtrack-mysql:
+        condition: service_healthy
+    environment:
+      <<: *teamtrack-env
+      RUNNING_MIGRATIONS_AND_SEEDERS: true
+    expose:
+      - 8000
+    healthcheck:
+      test: curl -s http://localhost:8000/up || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    volumes:
+      - storage:/var/www/html/storage
+    networks:
+      - teamtrack-network
+
+
+  # MySQL Service
+  teamtrack-mysql:
+    image: "mysql:8.0.37"
+    container_name: teamtrack-mysql
+    restart: unless-stopped
+    expose:
+      - 3306
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: teamtrack
+      MYSQL_USER: teamtrack
+      MYSQL_PASSWORD: teamtrack
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+        - teamtrack-network
+
+
+# Volumes
+volumes:
+  storage:
+  mysql:
+
+
+# Networks
+networks:
+  teamtrack-network:
+    name: teamtrack-network

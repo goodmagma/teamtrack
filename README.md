@@ -83,3 +83,11 @@ php artisan translations:translate it,es
 
 To override a translation, create a file in `resources/lang/persistent-strings-it.json`
 
+
+# Build Docker Images
+
+```
+docker buildx build --pull --no-cache -t teamtrack/frontend:latest .
+
+docker-compose up -d
+```
